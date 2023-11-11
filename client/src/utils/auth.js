@@ -1,5 +1,23 @@
 // use this to decode a token and get the user's information out of it
 import decode from 'jwt-decode';
+const { GraphQLError } = require('graphql');
+const jwt = require('jsonwebtoken');
+
+const secret = 'wipwipnaynay';
+const expiration = '2h';
+
+module.exports = {
+  AuthenticationError: new GraphQLError('Unable to authuntica', {
+    extensions: {
+      code: 'UNAUTHENTICATED'
+    },
+  }),
+    signToken: function ({ email, username, _id }) {
+    const payload = { email, username, _id };
+    return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+  },
+};
+
 
 // create a new class to instantiate for a user
 class AuthService {
