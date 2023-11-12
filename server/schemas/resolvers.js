@@ -37,34 +37,33 @@ const resolvers = {
 		},
 		saveBook: async (parent, { addBook }, context) => {
 			if (context.user) {
-				const book = await User.create({
-					bookTitle,
-					bookDescription,
-					bookImage,
-					bookLink: context.user.email,
-				});
-				await User.findByIdAndUpdate(
-					{
-						_id: context.user._id,
-					},
-					{ $addToSet: { book: book._id } }
+				const book = await User.findOneAndUpdate(
+					{ _id: addBook._id },
+					{ $addToSet: { savedBooks: body } },
+					{ new: true, runValidators: true }
 				);
+				// should not need code below since we're saving the book info by the body and already updating by user..
+				// await User.findByIdAndUpdate(
+				// 	{
+				// 		_id: context.user._id,
+				// 	},
+
+				// 	{ $addToSet: { book: book._id } }
+				// );
 				return book;
 			}
 			throw AuthenticationError;
 		},
-		removeBook: async (parent, { bookId }, context) => {
+		removeBook: async (parent, { user, params }, context) => {
 			if (context.user) {
-				const removelistedBook = await User.findByIdAndDelete({
-					_id: bookId,
-					email: context.user.email,
-				});
-
-				await User.findByIdAndUpdate(
-					{ _id: context.user._id },
-					{ $pull: { book: removelistedBook._id } }
+				return User.findOneAndUpdate(
+					{ _id: user._id },
+					{ $pull: { savedBooks: { bookId: params.bookId } } },
+					{ new: true }
 				);
 			}
+			      throw AuthenticationError;
 		},
 	},
 };
+module.exports = resolvers;
