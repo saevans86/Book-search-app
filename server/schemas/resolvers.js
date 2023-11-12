@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -34,6 +34,37 @@ const resolvers = {
 			});
 			const token = signToken(user);
 			return { token, user };
+		},
+		saveBook: async (parent, { addBook }, context) => {
+			if (context.user) {
+				const book = await User.create({
+					bookTitle,
+					bookDescription,
+					bookImage,
+					bookLink: context.user.email,
+				});
+				await User.findByIdAndUpdate(
+					{
+						_id: context.user._id,
+					},
+					{ $addToSet: { book: book._id } }
+				);
+				return book;
+			}
+			throw AuthenticationError;
+		},
+		removeBook: async (parent, { bookId }, context) => {
+			if (context.user) {
+				const removelistedBook = await User.findByIdAndDelete({
+					_id: bookId,
+					email: context.user.email,
+				});
+
+				await User.findByIdAndUpdate(
+					{ _id: context.user._id },
+					{ $pull: { book: removelistedBook._id } }
+				);
+			}
 		},
 	},
 };
