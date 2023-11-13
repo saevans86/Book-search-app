@@ -1,24 +1,30 @@
 const express = require('express');
 const path = require('path');
 const db = require('./config/connection');
-const routes = require('./routes');
+// const routes = require('./routes');
 const { ApolloServer } = require('@apollo/server');
 const {
 	expressMiddleware,
 } = require('@apollo/server/express4');
 
-const app = express();
+const { typeDefs, resolvers } = require('./schemas');
+
+
 const PORT = process.env.PORT || 3001;
 const server = new ApolloServer({
 	typeDefs,
 	resolvers,
 });
+const app = express();
+
 
 const startApolloServer = async () => {
 	await server.start();
 
 	app.use(express.urlencoded({ extended: true }));
 	app.use(express.json());
+
+	app.use('/graphql', expressMiddleware(server));
 
 	// if we're in production, serve client/build as static assets
 	if (process.env.NODE_ENV === 'production') {
@@ -33,6 +39,7 @@ const startApolloServer = async () => {
 		);
 	});
 };
+  app.use('/graphql', expressMiddleware(server));
 
 db.once('open', () => {
 	app.listen(PORT, () => {

@@ -4,8 +4,8 @@ type User {
     username: String
     email: String
     password: String
-    bookCount: String
-    savedBooks: string
+   
+    savedBooks(_id: String): [bookSchema]
 
 }
 Type Book {
