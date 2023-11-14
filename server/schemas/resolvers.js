@@ -1,10 +1,22 @@
 const { User } = require('../models');
-const { signToken } = require('../utils/auth');
+const {
+	signToken,
+	AuthenticationError,
+} = require('../utils/auth');
 
 const resolvers = {
 	Query: {
 		user: async () => {
-			return User.find().populate('books');
+			return User.find().populate();
+		},
+		profile: async (parent, { userId }) => {
+			return User.findOne({ _id: userId });
+		},
+		me: async (parent, args, context) => {
+			if (context.user) {
+				return Profile.findOne({ _id: context.user._id });
+			}
+			throw AuthenticationError;
 		},
 	},
 	Mutation: {
@@ -35,30 +47,30 @@ const resolvers = {
 			const token = signToken(user);
 			return { token, user };
 		},
-		saveBook: async (parent, { savedBooks }, context) => {
+		saveBook: async (
+			parent,
+			{ userId, savedBooks },
+			context
+		) => {
 			if (context.user) {
 				const book = await User.findOneAndUpdate(
-					{ _id: savedBooks._id },
-					{ $addToSet: { savedBooks: body } },
+					{ _id: userId._id },
+					{ $addToSet: { savedBooks: savedBooks } },
 					{ new: true, runValidators: true }
 				);
-				// should not need code below since we're saving the book info by the body and already updating by user..
-				// await User.findByIdAndUpdate(
-				// 	{
-				// 		_id: context.user._id,
-				// 	},
 
-				// 	{ $addToSet: { book: book._id } }
-				// );
-				return book;
 			}
 			throw AuthenticationError;
 		},
-		removeBook: async (parent, { user, params }, context) => {
+		removeBook: async (
+			parent,
+			{ userId, savedBooks },
+			context
+		) => {
 			if (context.user) {
 				return User.findOneAndUpdate(
-					{ _id: user._id },
-					{ $pull: { savedBooks: { bookId: params.bookId } } },
+					{ _id: userId._id },
+					{ $pull: { savedBooks: savedBooks } },
 					{ new: true }
 				);
 			}
