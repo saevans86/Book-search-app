@@ -3,10 +3,13 @@ import { Form, Button, Alert } from 'react-bootstrap';
 
 import { createUser } from '../utils/API';
 import Auth from '../utils/auth';
+import { ADD_USER } from '../utils/mutations';
+import { useMutation } from '@apollo/client';
 
 const SignupForm = () => {
   // set initial form state
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
+  const [addUser] = useMutation(ADD_USER)
   // set state for form validation
   const [validated] = useState(false);
   // set state for alert
@@ -15,10 +18,21 @@ const SignupForm = () => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
+    
   };
 
+  //todo work page causing auth not importing error
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    const mutationResponse = await addUser({
+      variables: {
+            username: formState.username,
+						email: formState.email,
+						password: formState.password,
+					},
+    }); 
+    const token = mutationResponse.data.addUser.token
+    Auth.login(token)
 
     // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
