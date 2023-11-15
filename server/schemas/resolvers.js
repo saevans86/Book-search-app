@@ -4,20 +4,21 @@ const {
 	AuthenticationError,
 } = require('../utils/auth');
 
+
 const resolvers = {
 	Query: {
 		user: async () => {
 			return User.find().populate();
 		},
-		profile: async (parent, { userId }) => {
-			return User.findOne({ _id: userId });
-		},
-		me: async (parent, args, context) => {
-			if (context.user) {
-				return Profile.findOne({ _id: context.user._id });
-			}
-			throw AuthenticationError;
-		},
+		// profile: async (parent, { userId }) => {
+		// 	return User.findOne({ _id: userId });
+		// },
+		// me: async (parent, args, context) => {
+		// 	if (context.user) {
+		// 		return Profile.findOne({ _id: context.user._id });
+		// 	}
+		// 	throw AuthenticationError;
+		// },
 	},
 	Mutation: {
 		login: async (parent, { email, password }) => {
