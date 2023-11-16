@@ -10,15 +10,16 @@ const resolvers = {
 		user: async () => {
 			return User.find().populate();
 		},
-		// profile: async (parent, { userId }) => {
-		// 	return User.findOne({ _id: userId });
-		// },
-		// me: async (parent, args, context) => {
-		// 	if (context.user) {
-		// 		return Profile.findOne({ _id: context.user._id });
-		// 	}
-		// 	throw AuthenticationError;
-		// },
+		user: async (parent, { userId }) => {
+			return User.findOne({ _id: userId });
+		},
+		me: async (parent, args, context) => {
+			  console.log('context.user:', context.user);
+			if (context.user) {
+				return User.findOne({ _id: context.user._id });
+			}
+			throw AuthenticationError;
+		},
 	},
 	Mutation: {
 		login: async (parent, { email, password }) => {
