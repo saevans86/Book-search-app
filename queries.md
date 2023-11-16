@@ -21,3 +21,22 @@ mutation Mutation($username: String!, $email: String!, $password: String!) {
     }
   }
 }
+
+{  "username": "clamo",
+  "email": "clamo@email.com",
+  "password": "password12345"
+}
+
+{
+  "data": {
+    "addUser": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoiY2xhbW9AZW1haWwuY29tLCIsIl9pZCI6IjY1NTY0MTM2YzdkOGFmNGQxNGFlZDI3NCJ9LCJpYXQiOjE3MDAxNTE2MDYsImV4cCI6MTcwMDE1ODgwNn0.1VLJczEXCnfp3vY3HjfBaayvqchYQ5h6CnpKMGNSjNo",
+      "user": {
+        "_id": "65564136c7d8af4d14aed274",
+        "email": "clamo@email.com,",
+        "password": "$2b$10$wu9J/KixThHQhTPLsYAlgewfPqw9fxyJxp5dD4YPh4.CkXOlITb3a",
+        "username": "clamo"
+      }
+    }
+  }
+}

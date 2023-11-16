@@ -9,8 +9,10 @@ import { useMutation } from '@apollo/client';
 
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
+  const [loginUser] = useMutation(LOGIN_USER);
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  console.log(userFormData);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -21,7 +23,6 @@ const LoginForm = () => {
 			event.preventDefault();
 
 			// check if form has everything (as per react-bootstrap docs)
-			const [loginUser] = useMutation(LOGIN_USER);
 			const form = event.currentTarget;
 			if (form.checkValidity() === false) {
 				event.preventDefault();
@@ -35,7 +36,9 @@ const LoginForm = () => {
 						email: userFormData.email,
 						password: userFormData.password,
 					},
-				});
+        });
+        // console.log(email);
+        // console.log(password);
 
 				const token = mutationResponse.data.loginUser.token;
 				Auth.login(token);

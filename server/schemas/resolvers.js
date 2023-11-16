@@ -7,14 +7,14 @@ const {
 
 const resolvers = {
 	Query: {
-		user: async () => {
-			return User.find().populate();
-		},
-		user: async (parent, { userId }) => {
-			return User.findOne({ _id: userId });
-		},
+		// user: async () => {
+		// 	return User.find().populate();
+		// },
+		// user: async (parent, { userId }) => {
+		// 	return User.findOne({ _id: userId });
+		// },
 		me: async (parent, args, context) => {
-			  console.log('context.user:', context.user);
+			console.log('context.user:', context.user);
 			if (context.user) {
 				return User.findOne({ _id: context.user._id });
 			}
