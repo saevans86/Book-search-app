@@ -5,10 +5,11 @@ import { setContext } from '@apollo/client/link/context';
 import Navbar from './components/Navbar';
 import {
 	ApolloClient,
-	ApolloProvider,
 	InMemoryCache,
+	ApolloProvider,
 	createHttpLink,
 } from '@apollo/client';
+
 
 const httpLink = createHttpLink({
 	uri: '/graphql',
@@ -23,10 +24,20 @@ const authLink = setContext((_, { headers }) => {
 		},
 	};
 });
+// const client = new ApolloClient({
+// 	link: authLink.concat(httpLink),
+// 	cache: new InMemoryCache(),
+// });
 const client = new ApolloClient({
-	link: authLink.concat(httpLink),
-	cache: new InMemoryCache(),
-});
+	_link: authLink.concat(httpLink),
+	get link() {
+		return this._link;
+	},
+	set link(value) {
+		this._link = value;
+	},
+	cache: new InMemoryCache()
+}) 
 
 function App() {
   return (

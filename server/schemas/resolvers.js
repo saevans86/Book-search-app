@@ -10,15 +10,16 @@ const resolvers = {
 		// user: async () => {
 		// 	return User.find().populate();
 		// },
-		// user: async (parent, { userId }) => {
-		// 	return User.findOne({ _id: userId });
-		// },
+		user: async (parent, { userId }) => {
+			console.log(userId);
+			return User.findOne({ _id: userId });
+		},
 		me: async (parent, args, context) => {
-			console.log('context.user:', context.user);
-			if (context.user) {
-				return User.findOne({ _id: context.user._id });
-			}
-			throw AuthenticationError;
+			// console.log(userData);
+			const userData = await User.findOne({
+				_id: context.user._id,
+			}).select('-__v -password');
+			return userData;
 		},
 	},
 	Mutation: {
@@ -60,7 +61,6 @@ const resolvers = {
 					{ $addToSet: { savedBooks: savedBooks } },
 					{ new: true, runValidators: true }
 				);
-
 			}
 			throw AuthenticationError;
 		},

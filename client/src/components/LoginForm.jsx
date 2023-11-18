@@ -9,16 +9,12 @@ import { useMutation } from '@apollo/client';
 
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
-  const [loginUser] = useMutation(LOGIN_USER);
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  console.log(userFormData);
+  // console.log(userFormData);
+  const [loginUser] = useMutation(LOGIN_USER);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
-  };
-
+ 
   const handleFormSubmit = async (event) => {
 			event.preventDefault();
 
@@ -30,15 +26,14 @@ const LoginForm = () => {
 			}
 
 			try {
-				const mutationResponse = await loginUser({
+				const {mutationResponse} = await loginUser({
 					variables: {
 						
 						email: userFormData.email,
 						password: userFormData.password,
 					},
         });
-        // console.log(email);
-        // console.log(password);
+        console.log(mutationResponse);
 
 				const token = mutationResponse.data.loginUser.token;
 				Auth.login(token);
@@ -52,7 +47,12 @@ const LoginForm = () => {
 				email: '',
 				password: '',
 			});
-		};
+  };
+   const handleInputChange = (event) => {
+				const { name, value } = event.target;
+				setUserFormData({ ...userFormData, [name]: value });
+			};
+
 
   return (
     <>

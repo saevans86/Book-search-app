@@ -2,6 +2,7 @@
 const jwt = require('jsonwebtoken');
 const { GraphQLError } = require('graphql');
 
+
 const secret = 'mysecretssshhhhhhh';
 const expiration = '2h';
 
@@ -37,7 +38,7 @@ module.exports = {
 			console.log('Invalid token');
 		}
 
-		return req;
+		
 	},
 	signToken: function ({ email, _id }) {
 		const payload = { email, _id };
@@ -47,7 +48,7 @@ module.exports = {
 	},
 };
 
-// // create a new class to instantiate for a user
+// create a new class to instantiate for a user
 // class AuthService {
 // 	// get user data
 // 	getProfile() {
