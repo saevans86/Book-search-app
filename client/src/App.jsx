@@ -1,14 +1,14 @@
 import './App.css';
-import { Outlet } from 'react-router-dom';
-import { setContext } from '@apollo/client/link/context';
-
-import Navbar from './components/Navbar';
 import {
 	ApolloClient,
 	InMemoryCache,
 	ApolloProvider,
 	createHttpLink,
 } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import { Outlet } from 'react-router-dom';
+
+import Navbar from './components/Navbar';
 
 
 const httpLink = createHttpLink({
@@ -29,15 +29,10 @@ const authLink = setContext((_, { headers }) => {
 // 	cache: new InMemoryCache(),
 // });
 const client = new ApolloClient({
-	_link: authLink.concat(httpLink),
-	get link() {
-		return this._link;
-	},
-	set link(value) {
-		this._link = value;
-	},
-	cache: new InMemoryCache()
-}) 
+	link: authLink.concat(httpLink),
+	cache: new InMemoryCache(),
+});
+
 
 function App() {
   return (

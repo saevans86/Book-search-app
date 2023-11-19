@@ -7,19 +7,16 @@ const {
 
 const resolvers = {
 	Query: {
-		// user: async () => {
-		// 	return User.find().populate();
-		// },
-		user: async (parent, { userId }) => {
-			console.log(userId);
-			return User.findOne({ _id: userId });
-		},
+
 		me: async (parent, args, context) => {
 			// console.log(userData);
 			const userData = await User.findOne({
 				_id: context.user._id,
 			}).select('-__v -password');
 			return userData;
+		},
+		user: async (parent, { userId }) => {
+			return User.findOne({ _id: userId });
 		},
 	},
 	Mutation: {

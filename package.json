@@ -21,6 +21,7 @@
 		"@types/react-dom": "^18.2.15",
 		"@vitejs/plugin-react": "^4.1.1",
 		"apollo-server-express": "^3.13.0",
+		"express-middleware": "^1.1.0",
 		"graphql": "^16.8.1",
 		"graphql-tag": "^2.12.6",
 		"jsonwebtoken": "^9.0.2",

@@ -4,96 +4,114 @@ import { Form, Button, Alert } from 'react-bootstrap';
 
 // import { loginUser } from '../utils/API';
 import Auth from '../utils/auth';
-import {LOGIN_USER } from '../utils/mutations'
+import { LOGIN_USER } from '../utils//mutations.js';
 import { useMutation } from '@apollo/client';
 
 const LoginForm = () => {
-  const [userFormData, setUserFormData] = useState({ email: '', password: '' });
-  const [validated] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  // console.log(userFormData);
-  const [loginUser] = useMutation(LOGIN_USER);
+	const [userFormData, setUserFormData] = useState({
+		email: '',
+		password: '',
+	});
+	const [validated] = useState(false);
+	const [showAlert, setShowAlert] = useState(false);
+	const [loginMutation] = useMutation(LOGIN_USER);
 
- 
-  const handleFormSubmit = async (event) => {
+	const handleInputChange = (event) => {
+		const { name, value } = event.target;
+		setUserFormData({ ...userFormData, [name]: value });
+	};
+	console.log(userFormData);
+	const handleFormSubmit = async (event) => {
+		event.preventDefault();
+
+		// check if form has everything (as per react-bootstrap docs)
+		const form = event.currentTarget;
+		if (form.checkValidity() === false) {
 			event.preventDefault();
+			event.stopPropagation();
+		}
 
-			// check if form has everything (as per react-bootstrap docs)
-			const form = event.currentTarget;
-			if (form.checkValidity() === false) {
-				event.preventDefault();
-				event.stopPropagation();
-			}
-
-			try {
-				const {mutationResponse} = await loginUser({
-					variables: {
-						
-						email: userFormData.email,
-						password: userFormData.password,
-					},
-        });
-        console.log(mutationResponse);
-
-				const token = mutationResponse.data.loginUser.token;
-				Auth.login(token);
-			} catch (error) {
-				console.error(error);
-				setShowAlert(true);
-			}
-
-			setUserFormData({
-				username: '',
-				email: '',
-				password: '',
+		try {
+			const response = await loginMutation({
+				variables: {
+					email: userFormData.email,
+					password: userFormData.password,
+				},
 			});
-  };
-   const handleInputChange = (event) => {
-				const { name, value } = event.target;
-				setUserFormData({ ...userFormData, [name]: value });
-			};
+			console.log(response);
 
+			if (!response.ok) {
+				throw new Error('something went wrong!');
+			}
+			const token = response.data.loginMutation.token;
+			Auth.login(token);
+		} catch (err) {
+			console.error(err.message);
+			setShowAlert(true);
+		}
 
-  return (
-    <>
-      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
-        <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
-          Something went wrong with your login credentials!
-        </Alert>
-        <Form.Group className='mb-3'>
-          <Form.Label htmlFor='email'>Email</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Your email'
-            name='email'
-            onChange={handleInputChange}
-            value={userFormData.email}
-            required
-          />
-          <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
-        </Form.Group>
+		// setUserFormData({
+		// 	email: '',
+		// 	password: '',
+		// });
+	};
 
-        <Form.Group className='mb-3'>
-          <Form.Label htmlFor='password'>Password</Form.Label>
-          <Form.Control
-            type='password'
-            placeholder='Your password'
-            name='password'
-            onChange={handleInputChange}
-            value={userFormData.password}
-            required
-          />
-          <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
-        </Form.Group>
-        <Button
-          disabled={!(userFormData.email && userFormData.password)}
-          type='submit'
-          variant='success'>
-          Submit
-        </Button>
-      </Form>
-    </>
-  );
+	return (
+		<>
+			<Form
+				noValidate
+				validated={validated}
+				onSubmit={handleFormSubmit}
+			>
+				<Alert
+					dismissible
+					onClose={() => setShowAlert(false)}
+					show={showAlert}
+					variant='danger'
+				>
+					Something went wrong with your login credentials!
+				</Alert>
+				<Form.Group className='mb-3'>
+					<Form.Label htmlFor='email'>Email</Form.Label>
+					<Form.Control
+						type='text'
+						placeholder='Your email'
+						name='email'
+						onChange={handleInputChange}
+						value={userFormData.email}
+						required
+					/>
+					<Form.Control.Feedback type='invalid'>
+						Email is required!
+					</Form.Control.Feedback>
+				</Form.Group>
+
+				<Form.Group className='mb-3'>
+					<Form.Label htmlFor='password'>Password</Form.Label>
+					<Form.Control
+						type='password'
+						placeholder='Your password'
+						name='password'
+						onChange={handleInputChange}
+						value={userFormData.password}
+						required
+					/>
+					<Form.Control.Feedback type='invalid'>
+						Password is required!
+					</Form.Control.Feedback>
+				</Form.Group>
+				<Button
+					disabled={
+						!(userFormData.email && userFormData.password)
+					}
+					type='submit'
+					variant='success'
+				>
+					Submit
+				</Button>
+			</Form>
+		</>
+	);
 };
 
 export default LoginForm;

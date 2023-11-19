@@ -22,20 +22,23 @@ mutation Mutation($username: String!, $email: String!, $password: String!) {
   }
 }
 
-{  "username": "clamo",
-  "email": "clamo@email.com",
-  "password": "password12345"
-}
 
+
+
+
+{  "username": "farteeka",
+  "email": "farteeka@email.com",
+  "password": "farteeka"
+}
 {
   "data": {
     "addUser": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoiY2xhbW9AZW1haWwuY29tLCIsIl9pZCI6IjY1NTY0MTM2YzdkOGFmNGQxNGFlZDI3NCJ9LCJpYXQiOjE3MDAxNTE2MDYsImV4cCI6MTcwMDE1ODgwNn0.1VLJczEXCnfp3vY3HjfBaayvqchYQ5h6CnpKMGNSjNo",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoiZmFydGVla2FAZW1haWwuY29tIiwiX2lkIjoiNjU1NmE1MGVjYThkYTI3N2JjNWExOTM0In0sImlhdCI6MTcwMDE3NzE2NiwiZXhwIjoxNzAwMTg0MzY2fQ.bSgIrYmE7Fz04jXmKC6lGu9ekGCvFFQO568wC_2xhn0",
       "user": {
-        "_id": "65564136c7d8af4d14aed274",
-        "email": "clamo@email.com,",
-        "password": "$2b$10$wu9J/KixThHQhTPLsYAlgewfPqw9fxyJxp5dD4YPh4.CkXOlITb3a",
-        "username": "clamo"
+        "_id": "6556a50eca8da277bc5a1934",
+        "username": "farteeka",
+        "email": "farteeka@email.com",
+        "password": "$2b$10$V8/gVlq9ZXEbHG0y4eV2u.eAEMy9VdfcAvZCF9fT2vSn6YvkV/KOm"
       }
     }
   }
