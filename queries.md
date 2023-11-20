@@ -1,45 +1,41 @@
-mutation Mutation($username: String!, $email: String!, $password: String!) {
-  addUser(username: $username, email: $email, password: $password) {
-    token
-    user {
-      _id
-      email
-      password
-    }
-  }
-} 
-
 {
   "data": {
     "addUser": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoic2FtYm9AbXNuLmNvbSIsIl9pZCI6IjY1NTYzYWQ1MjU5MmM3NGMyOWY3YzhkYSJ9LCJpYXQiOjE3MDAxNDk5NzMsImV4cCI6MTcwMDE1NzE3M30.RRhn2c1X6yhcexcfSryO8DQEBRpC92rVj4uvDPEteK8",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoibnVmZkBlbWFpbC5jb20iLCJfaWQiOiI2NTVhNWE0Zjk4OWMxNmQwZWNhMWYxMzUifSwiaWF0IjoxNzAwNDIwMTc1LCJleHAiOjE3MDA0MjczNzV9.ExYJsr727qVYnq2XiuCZPx4ovveS7Glb7nsEW7lGzfU",
       "user": {
-        "_id": "65563ad52592c74c29f7c8da",
-        "email": "sambo@msn.com",
-        "password": "$2b$10$f5akAx904B8sXVXWJuGcBum5OCxFnlhgc1kfj7PXFx2j/O0.mN72i"
+        "username": "nuff",
+        "email": "nuff@email.com",
+        "password": "$2b$10$G.Ju0rpQGgNs4NcUSzOGc.LLCcVLjZ/cr74lVc9Hw7B.nR6fykBZ6",
+        "_id": "655a5a4f989c16d0eca1f135"
       }
     }
   }
 }
 
-
-
-
-
-{  "username": "farteeka",
-  "email": "farteeka@email.com",
-  "password": "farteeka"
+{
+  "email": "nuff@email.com",
+  "password": "nuff",
+  "username": "nuff"
 }
+
+
 {
   "data": {
     "addUser": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoiZmFydGVla2FAZW1haWwuY29tIiwiX2lkIjoiNjU1NmE1MGVjYThkYTI3N2JjNWExOTM0In0sImlhdCI6MTcwMDE3NzE2NiwiZXhwIjoxNzAwMTg0MzY2fQ.bSgIrYmE7Fz04jXmKC6lGu9ekGCvFFQO568wC_2xhn0",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoiYmVlZkBiZWVmLmNvbSIsIl9pZCI6IjY1NWE2OTY3Mjc2NzJlNmE3NjgyOTZlOCJ9LCJpYXQiOjE3MDA0MjQwMzksImV4cCI6MTcwMDQzMTIzOX0.RYQJNR-l7d8R2p-1eZFTkJuFSbpDh0ZE4Wb46qAI-lE",
       "user": {
-        "_id": "6556a50eca8da277bc5a1934",
-        "username": "farteeka",
-        "email": "farteeka@email.com",
-        "password": "$2b$10$V8/gVlq9ZXEbHG0y4eV2u.eAEMy9VdfcAvZCF9fT2vSn6YvkV/KOm"
+        "username": "beef",
+        "email": "beef@beef.com",
+        "password": "$2b$10$PxTNOBZXtlIOFmwN3tzQoebROT6PuLNhM9WkEqinQ7njy3eF4Leci",
+        "_id": "655a696727672e6a768296e8"
       }
     }
   }
+}
+
+{
+  
+  "username": "beef",
+  "email": "beef@beef.com",
+  "password": "beef"
 }

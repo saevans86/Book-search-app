@@ -12,17 +12,19 @@ const LoginForm = () => {
 		email: '',
 		password: '',
 	});
-	const [validated] = useState(false);
+	const [login] = useMutation(LOGIN_USER);
+	const [validated, setValidated] = useState(false);
 	const [showAlert, setShowAlert] = useState(false);
-	const [loginMutation] = useMutation(LOGIN_USER);
 
 	const handleInputChange = (event) => {
 		const { name, value } = event.target;
 		setUserFormData({ ...userFormData, [name]: value });
+	
 	};
-	console.log(userFormData);
+	// console.log(userFormData);
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();
+			setValidated(true);
 
 		// check if form has everything (as per react-bootstrap docs)
 		const form = event.currentTarget;
@@ -32,28 +34,25 @@ const LoginForm = () => {
 		}
 
 		try {
-			const response = await loginMutation({
-				variables: {
-					email: userFormData.email,
-					password: userFormData.password,
-				},
-			});
-			console.log(response);
-
-			if (!response.ok) {
-				throw new Error('something went wrong!');
+		const mutationResponse = await login({
+			variables: {
+			
+				email: userFormData.email,
+				password: userFormData.password,
+			},
+		});
+	const token = mutationResponse.data.login.token;
+				// console.log(userFormData);
+				Auth.login(token);
+			} catch (err) {
+				console.error(err.message);
+				setShowAlert(true);
 			}
-			const token = response.data.loginMutation.token;
-			Auth.login(token);
-		} catch (err) {
-			console.error(err.message);
-			setShowAlert(true);
-		}
 
-		// setUserFormData({
-		// 	email: '',
-		// 	password: '',
-		// });
+		setUserFormData({
+			email: '',
+			password: '',
+		});
 	};
 
 	return (

@@ -9,17 +9,18 @@ type User {
   username: String!
   email: String!
   password: String!
-  savedBooks: Book
+  savedBooks: [Book]
+  bookCount: Int
 }
+
 type Book {
   authors: [String]
   description: String!
-    bookId: ID!
-    image: String
-    link: String
-    title: String!
+  bookId: ID!
+  image: String
+  link: String
+  title: String!
 }
-
 
   type Auth {
     token: ID!

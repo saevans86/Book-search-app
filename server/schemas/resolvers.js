@@ -11,14 +11,16 @@ const resolvers = {
 		me: async (parent, args, context) => {
 			// console.log(userData);
 			const userData = await User.findOne({
-				_id: context.user._id,
+				_id: context.userId._id,
 			}).select('-__v -password');
 			return userData;
 		},
 		user: async (parent, { userId }) => {
 			return User.findOne({ _id: userId });
 		},
+		
 	},
+	
 	Mutation: {
 		login: async (parent, { email, password }) => {
 			const loginUser = await User.findOne({ email });
