@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Container,
   Card,
@@ -12,21 +12,22 @@ import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 import { GET_ME } from '../utils/queries';
 import { REMOVE_BOOK } from "../utils/mutations";
+// import { useMutation } from '@apollo/client';
 
 const SavedBooks = () => {
 	const [userData, setUserData] = useState({});
 
 	const { loading, data } = useQuery(GET_ME);
 
-	const [removeBook] = useMutation(REMOVE_BOOK);
-
+	
 	useEffect(() => {
 		if (data) {
 			setUserData(data.me);
 		}
 	}, [data]);
-
+	
 	const handleDeleteBook = async (bookId) => {
+		const [removeBook] = useMutation(REMOVE_BOOK);
 		const token = Auth.loggedIn() ? Auth.getToken() : null;
 
 		if (!token) {
