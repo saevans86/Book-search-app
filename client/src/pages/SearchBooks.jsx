@@ -63,6 +63,7 @@ const SearchBooks = () => {
 				image: book.volumeInfo.imageLinks?.thumbnail || '',
 			}));
 
+		
 			setSearchedBooks(bookData);
 			setSearchInput('');
 		} catch (err) {
@@ -79,33 +80,33 @@ const SearchBooks = () => {
     console.log(bookId);
 		// get token
 		const token = Auth.loggedIn() ? Auth.getToken() : null;
-		console.log(bookToSave);
+		console.log(token);
 
 		if (!token) {
 			return false;
 		}
 
 		try {
-const {data} = await saveBook({
-	variables: {
-		authors: bookToSave.authors,
-		description: bookToSave.description,
-		bookId: bookToSave.bookId,
-		image: bookToSave.image,
-		link: bookToSave.links,
-		title: bookToSave.title,
-	},
-	context: {
-		headers: {
-			authorization: `Bearer ${token}`,
-		},
-	},
-});
-      console.log(data);
+			const data = await saveBook({
+				variables: {
+					authors: bookToSave.authors,
+					description: bookToSave.description,
+					bookId: bookToSave.bookId,
+					image: bookToSave.image,
+					link: bookToSave.links,
+					title: bookToSave.title,
+				},
+				context: {
+					headers: {
+						authorization: `Bearer ${token}`,
+					},
+				},
+      });
+      console.log(data)
 
-			if (!data.ok) {
-				throw new Error(error);
-			}
+	if (!data) {
+		throw new Error('Mutation response is undefined');
+	}
 
 			// if book successfully saves to user's account, save book id to state
 			setSavedBookIds([...savedBookIds, bookToSave.bookId]);

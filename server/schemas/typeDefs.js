@@ -1,8 +1,8 @@
 const typeDefs = `
 
 type Query {
+  user(_id: ID!): User
   me: User
-  user(id: ID!): User
 }
 type User {
   _id: ID

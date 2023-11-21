@@ -13,8 +13,8 @@ const resolvers = {
 			}).select('-__v -password');
 			return userData;
 		},
-		user: async (parent, { userId }) => {
-			return User.findOne({ _id: userId });
+		user: async (parent, { _id }) => {
+			return User.findOne({ _id: _id });
 		},
 	},
 
@@ -48,7 +48,7 @@ const resolvers = {
 		},
 		saveBook: async (parent, { _id, savedBooks }) => {
 			const updatedUser = await User.findOneAndUpdate(
-				{ _id: _id },
+				{ userId: _id },
 				{ $addToSet: { savedBooks: savedBooks } },
 				{ new: true, runValidators: true }
 			);
