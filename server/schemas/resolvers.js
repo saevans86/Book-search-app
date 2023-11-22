@@ -6,15 +6,26 @@ const {
 
 const resolvers = {
 	Query: {
-		me: async (parent, args, context) => {
-			// console.log(userData);
-			const userData = await User.findOne({
-				_id: context.userId._id,
-			}).select('-__v -password');
-			return userData;
+		// me: async (parent, args, context) => {
+		// 	// console.log(userData);
+		// 	const userData = await User.findOne({
+		// 		_id: context.user._id,
+		// 	}).select('-__v -password');
+		// 	return userData;
+		// },
+		me: async (parent, context) => {
+			if (context.user) {
+				// const me =
+					await User.findOne({ _id: _id }).select(
+					'-__v -password'
+				);
+				// const token = signToken(me);
+				//  return { token, me };
+			}
+			throw AuthenticationError;
 		},
 		user: async (parent, { _id }) => {
-			return User.findOne({ _id: _id });
+			return User.findOne({ userId: _id });
 		},
 	},
 

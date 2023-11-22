@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import {
 	Container,
 	Card,
@@ -16,33 +16,37 @@ import { REMOVE_BOOK } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 
 const SavedBooks = () => {
-	
-	const [removeBook] = useMutation(REMOVE_BOOK);
-	// const [userData, setUserData] = useState({});
-
+	// const [setUserData] = useState({});
 	const { loading, data } = useQuery(GET_ME);
-	const userData = data?.me || {}
-	
+	const userData = data?.me || {};
+	const [removeBook] = useMutation(REMOVE_BOOK);
 
+	// console.log(userData);
+	console.log(userData);
 
-	const handleDeleteBook = async (bookId) => {
-		const token = Auth.loggedIn() ? Auth.getToken() : null;
+  const handleDeleteBook = async (bookId) => {
+			const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-		if (!token) {
-			return false;
-		}
+			if (!token) {
+				return false;
+			}
 
-		try {
-			await removeBook({
-				variables: { bookId },
-			});
+			try {
+				const response = await removeBook(bookId, token);
 
-			// upon success, remove book's id from localStorage
-			removeBookId(bookId);
-		} catch (err) {
-			console.error(err);
-		}
-	};
+				if (!response.ok) {
+					throw new Error('something went wrong!');
+				}
+
+				const updatedUser = await response.json();
+				userData(updatedUser);
+				// upon success, remove book's id from localStorage
+				removeBookId(bookId);
+			} catch (err) {
+				console.error(err);
+			}
+		};
+		
 
 	if (loading) {
 		return <h2>LOADING...</h2>;
