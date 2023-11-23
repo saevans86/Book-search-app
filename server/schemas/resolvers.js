@@ -6,27 +6,28 @@ const {
 
 const resolvers = {
 	Query: {
-		// users: async () => {
-		// 	return User.find().populate('savedBooks');
-		// },
-		// user: async (parent, { username }) => {
-		// 	return User.findOne({ username }).populate('savedBooks');
-		// },
-		// books: async (parent, { username }) => {
-		// 	const params = username ? { username } : {};
-		// },
-		// book: async (parent, { bookId }) => {
-		// 	return User.findOne({ _id: bookId });
-		// },
+		users: async () => {
+			return User.find().populate('savedBooks');
+		},
+		user: async (parent, { username }) => {
+			return User.findOne({ username }).populate('savedBooks');
+		},
+		book: async (parent, { username }) => {
+			const params = username ? { username } : {};
+		},
+		books: async (parent, { bookId }) => {
+			return User.findOne({ _id: bookId });
+		},
 		me: async (parent, context) => {
 			if (context.user) {
 				const me = await User.findOne({ _id: _id }).select(
 					'-__v -password'
 				);
-				// const token = signToken(me);
+				const token = signToken(me);
 				return { token, me };
 			}
 			throw AuthenticationError;
+				
 		},
 	},
 

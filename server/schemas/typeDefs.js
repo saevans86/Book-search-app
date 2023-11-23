@@ -31,10 +31,6 @@ type Auth {
   user: User
 }
   type Query {
-    users: [User]
-    user(username: String!): User
-    books(username: String): [Book]
-    book(bookId: ID!): Book
     me: User
   }
   type Mutation {
