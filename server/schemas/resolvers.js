@@ -18,13 +18,15 @@ const resolvers = {
 		// books: async (parent, { bookId }) => {
 		// 	return User.findOne({ _id: bookId });
 		// },
-		me: async (parent, context) => {
+		me: async (parent, args, context) => {
 			if (context.user) {
-				const me = await User.findOne({ _id: _id }).select(
-					'-__v -password'
-				);
-				const token = signToken(me);
-				return { token, me };
+				const me = await User.findOne({
+					_id: context.user._id,
+				})
+					.select('-__v -password')
+					.populate('savedBooks');;
+				// const token = signToken(me);
+				// return { token, user: me };
 			}
 			throw AuthenticationError;
 		},

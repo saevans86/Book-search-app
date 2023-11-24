@@ -14,12 +14,11 @@ import { GET_ME } from '../utils/queries';
 import { REMOVE_BOOK } from '../utils/mutations';
 
 
-
 const SavedBooks = () => {
 	const { loading, data } = useQuery(GET_ME);
 	const [removeBook] = useMutation(REMOVE_BOOK);
 	const userData = data?.me || {};
-	console.log(userData);
+		console.log(data);
 
   const handleDeleteBook = async (bookId) => {
 			const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -51,7 +50,7 @@ const SavedBooks = () => {
 
 	return (
 		<>
-			<div fluid className='text-light bg-dark p-5'>
+			<div className='text-light bg-dark p-5 fluid'>
 				<Container>
 					<h1>Viewing saved books!</h1>
 				</Container>

@@ -25,11 +25,12 @@ input BookInput {
   title: String
 }
 
-
 type Auth {
   token: ID!
   user: User
 }
+
+
 type Query {
   user(_id: ID!): User
   me: User
