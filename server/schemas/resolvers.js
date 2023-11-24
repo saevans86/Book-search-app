@@ -6,18 +6,18 @@ const {
 
 const resolvers = {
 	Query: {
-		users: async () => {
-			return User.find().populate('savedBooks');
-		},
+		// users: async () => {
+		// 	return User.find().populate('savedBooks');
+		// },
 		user: async (parent, { username }) => {
 			return User.findOne({ username }).populate('savedBooks');
 		},
-		book: async (parent, { username }) => {
-			const params = username ? { username } : {};
-		},
-		books: async (parent, { bookId }) => {
-			return User.findOne({ _id: bookId });
-		},
+		// book: async (parent, { username }) => {
+		// 	const params = username ? { username } : {};
+		// },
+		// books: async (parent, { bookId }) => {
+		// 	return User.findOne({ _id: bookId });
+		// },
 		me: async (parent, context) => {
 			if (context.user) {
 				const me = await User.findOne({ _id: _id }).select(
@@ -27,7 +27,6 @@ const resolvers = {
 				return { token, me };
 			}
 			throw AuthenticationError;
-				
 		},
 	},
 
@@ -59,22 +58,22 @@ const resolvers = {
 			const token = signToken(user);
 			return { token, user };
 		},
-		saveBook: async (parent, { bookInput }, context) => {
+		saveBook: async (parent, { _id, savedBooks }) => {
 			const updatedUser = await User.findOneAndUpdate(
-				{ _id: context.user._id },
-				{ $push: { savedBooks: bookInput } },
+				{ userId: _id },
+				{ $addToSet: { savedBooks: savedBooks } },
 				{ new: true, runValidators: true }
 			);
 			return updatedUser;
 		},
 		removeBook: async (
 			parent,
-			{ userId, savedBooks },
+			{ _id, savedBooks },
 			context
 		) => {
 			if (context.user) {
 				return User.findOneAndUpdate(
-					{ _id: userId._id },
+					{ _id: _id._id },
 					{ $pull: { savedBooks: savedBooks } },
 					{ new: true }
 				);

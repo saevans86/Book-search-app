@@ -19,7 +19,7 @@ import { useMutation } from '@apollo/client';
 
 const SearchBooks = () => {
 	// create state for holding returned google api data
-	const [saveBook, { error }] = useMutation(SAVE_BOOK);
+	const [saveBook] = useMutation(SAVE_BOOK);
 
 	const [searchedBooks, setSearchedBooks] = useState([]);
 	// create state for holding our search field data
@@ -64,6 +64,7 @@ const SearchBooks = () => {
 			}));
 
 		
+			console.log(bookData);
 			setSearchedBooks(bookData);
 			setSearchInput('');
 		} catch (err) {
@@ -77,25 +78,32 @@ const SearchBooks = () => {
 			(book) => book.bookId === bookId
 		);
 
-    console.log(bookId);
+    console.log(bookToSave);
 		// get token
 		const token = Auth.loggedIn() ? Auth.getToken() : null;
+		
 		console.log(token);
-
 		if (!token) {
 			return false;
 		}
-
+		
 		try {
 			const data = await saveBook({
-			variables: { bookInput: bookToSave },
-				context: {
-					headers: {
-						authorization: `Bearer ${token}`,
-					},
+				variables: {
+					authors: bookToSave.authors,
+					description: bookToSave.description,
+					bookId: bookToSave.bookId,
+					image: bookToSave.image,
+					link: bookToSave.links,
+					title: bookToSave.title,
 				},
-      });
-      console.log(data)
+				// context: {
+				// 	headers: {
+				// 		authorization: `Bearer ${token}`,
+				// 	},
+				// },
+			});
+		console.log(data);
 
 	if (!data) {
 		throw new Error('Mutation response is undefined');
