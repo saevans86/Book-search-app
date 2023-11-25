@@ -24,9 +24,9 @@ const resolvers = {
 					_id: context.user._id,
 				})
 					.select('-__v -password')
-					.populate('savedBooks');;
+					.populate('savedBooks');
 				// const token = signToken(me);
-				// return { token, user: me };
+				return me;
 			}
 			throw AuthenticationError;
 		},
@@ -60,23 +60,20 @@ const resolvers = {
 			const token = signToken(user);
 			return { token, user };
 		},
-		saveBook: async (parent, { _id, savedBooks }) => {
+		saveBook: async (parent, savedBooks, context) => {
+			console.log(savedBooks, context.user);
 			const updatedUser = await User.findOneAndUpdate(
-				{ userId: _id },
+				{ _id: context.user._id },
 				{ $addToSet: { savedBooks: savedBooks } },
 				{ new: true, runValidators: true }
 			);
 			return updatedUser;
 		},
-		removeBook: async (
-			parent,
-			{ _id, savedBooks },
-			context
-		) => {
+		removeBook: async (parent, { bookId }, context) => {
 			if (context.user) {
 				return User.findOneAndUpdate(
-					{ _id: _id._id },
-					{ $pull: { savedBooks: savedBooks } },
+					{ _id: context.user._id },
+					{ $pull: { savedBooks: { bookId: bookId } } },
 					{ new: true }
 				);
 			}

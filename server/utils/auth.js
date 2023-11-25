@@ -38,7 +38,7 @@ module.exports = {
 			console.log('Invalid token');
 		}
 
-		
+		return req;
 	},
 	signToken: function ({ email, _id }) {
 		const payload = { email, _id };

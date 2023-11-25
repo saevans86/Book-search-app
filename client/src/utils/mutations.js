@@ -94,9 +94,11 @@ export const SAVE_BOOK = gql`
 // 	}
 // `;
 export const REMOVE_BOOK = gql`
-	mutation removeBook($book: String) {
-		removeBook(book: $book) {
-			bookId
+	mutation removeBook($bookId: String!) {
+		removeBook(bookId: $bookId) {
+			savedBooks {
+				bookId
+			}
 		}
 	}
 `;
