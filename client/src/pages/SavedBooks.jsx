@@ -18,7 +18,7 @@ const SavedBooks = () => {
 	const { loading, data } = useQuery(GET_ME);
 	const [removeBook] = useMutation(REMOVE_BOOK);
 	const userData = data?.me || {};
-		console.log(data);
+		// console.log(data);
 
   const handleDeleteBook = async (bookId) => {
 			const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -39,8 +39,8 @@ const SavedBooks = () => {
 						},
 					],
 				});
-					console.log(data);
-				// userData(updatedUser);
+					// console.log(data);
+			
 				// upon success, remove book's id from localStorage
 				removeBookId(bookId);
 			} catch (err) {

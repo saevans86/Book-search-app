@@ -64,7 +64,7 @@ const SearchBooks = () => {
 			}));
 
 		
-			console.log(bookData);
+			// console.log(bookData);
 			setSearchedBooks(bookData);
 			setSearchInput('');
 		} catch (err) {
@@ -78,11 +78,11 @@ const SearchBooks = () => {
 			(book) => book.bookId === bookId
 		);
 
-    console.log(bookToSave);
+    // console.log(bookToSave);
 		// get token
 		const token = Auth.loggedIn() ? Auth.getToken() : null;
 		
-		console.log(token);
+		// console.log(token);
 		if (!token) {
 			return false;
 		}
