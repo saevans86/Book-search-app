@@ -5,14 +5,15 @@ Book-Search-App
 
 
 
-## Description 
+## Description who/what/why/when/how
 This book app is a refactored Google book api using MERN. 
 
-## who/what/why/when/how
-Going into this project felt like it'd be an easy project, but getting into the the in's and out's of apollo and GQL. After getting most of the back-end setup
+
+Going into this project felt like it'd be an easy project, but getting into the in's and out's of Apollo and GQL. After getting most of the back-end setup
+
 it seemed like it would have ran smoothly, but I soon found out a lot of the knowledge I had for implementing my resolvers and typedefs based on the models was fairly limited in terms of my knowledge of MySQL, it took quite a bit of debugging on the front and back end as well as some help, and a lot of reading from the Apollo docs. Looking at it now as a working app, I can still see multiple areas where my code could use improvement.  I feel like this is one of the projects that taught me the most, and has made diving into other Apollo applications a lot smoother! 
 
-To see the base code for this project please see https://github.com/coding-boot-camp/solid-broccoli
+To see the base code for this project please see [code base](https://github.com/coding-boot-camp/solid-broccoli)
 To see the requirements for this project please see the references folder and the file titled reference.md
 
 
@@ -30,7 +31,7 @@ To see the requirements for this project please see the references folder and th
 
 ## Installation 
 NPM install to run locally, then NPM run develop from base. Please see live site link below: 
-book-search-app-production.up.railway.app
+[Book search app](book-search-app-production.up.railway.app)
 
 
 
@@ -45,7 +46,7 @@ book-search-app-production.up.railway.app
     
 
 ## Credits 
-Andrew Hardemon (tutor), Jacek Hacking helping with deploy! You guys rock!
+Andrew Hardemon (tutor) CJ (always helping), Jacek Hacking (helping with deploy)! You guys rock!
 
 
 
